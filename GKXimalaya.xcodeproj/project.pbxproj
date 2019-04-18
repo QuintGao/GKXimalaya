@@ -12,6 +12,7 @@
 		6052C1AE2253455A009581A0 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1AA2253455A009581A0 /* PGIndexBannerSubiew.m */; };
 		6052C1AF2253455A009581A0 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1AB2253455A009581A0 /* NewPagedFlowView.m */; };
 		6052C2482260288E009581A0 /* JXCategoryTitleView+GKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */; };
+		605A57A02268888B000265F5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 605A579F2268888B000265F5 /* README.md */; };
 		605C738C224DCE660061491E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738B224DCE660061491E /* AppDelegate.m */; };
 		605C738F224DCE660061491E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738E224DCE660061491E /* ViewController.m */; };
 		605C7392224DCE660061491E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605C7390224DCE660061491E /* Main.storyboard */; };
@@ -72,6 +73,7 @@
 		6052C1AD2253455A009581A0 /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
 		6052C2462260288E009581A0 /* JXCategoryTitleView+GKCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JXCategoryTitleView+GKCategory.h"; sourceTree = "<group>"; };
 		6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JXCategoryTitleView+GKCategory.m"; sourceTree = "<group>"; };
+		605A579F2268888B000265F5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		605C7387224DCE660061491E /* GKXimalaya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKXimalaya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		605C738A224DCE660061491E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		605C738B224DCE660061491E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				605C7398224DCE670061491E /* Info.plist */,
 				605C7399224DCE670061491E /* main.m */,
 				605C73ED224E03FD0061491E /* PrefixHeader.pch */,
+				605A579F2268888B000265F5 /* README.md */,
 				79E243782250CA9000CE0AED /* ThirdLibs */,
 			);
 			path = GKXimalaya;
@@ -507,6 +510,7 @@
 			files = (
 				605C7397224DCE670061491E /* LaunchScreen.storyboard in Resources */,
 				605C7394224DCE670061491E /* Assets.xcassets in Resources */,
+				605A57A02268888B000265F5 /* README.md in Resources */,
 				605C7392224DCE660061491E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
