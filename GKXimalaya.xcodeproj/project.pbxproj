@@ -9,13 +9,9 @@
 /* Begin PBXBuildFile section */
 		4A56EF401D18ACE4713AE07A /* libPods-GKXimalaya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B2A46A40A0651BBE9B375B /* libPods-GKXimalaya.a */; };
 		6052C1A82252164A009581A0 /* GKListContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1A72252164A009581A0 /* GKListContainerView.m */; };
-		6052C1AE2253455A009581A0 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1AA2253455A009581A0 /* PGIndexBannerSubiew.m */; };
-		6052C1AF2253455A009581A0 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1AB2253455A009581A0 /* NewPagedFlowView.m */; };
 		6052C2482260288E009581A0 /* JXCategoryTitleView+GKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */; };
 		605A57A02268888B000265F5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 605A579F2268888B000265F5 /* README.md */; };
 		605C738C224DCE660061491E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738B224DCE660061491E /* AppDelegate.m */; };
-		605C738F224DCE660061491E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738E224DCE660061491E /* ViewController.m */; };
-		605C7392224DCE660061491E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605C7390224DCE660061491E /* Main.storyboard */; };
 		605C7394224DCE670061491E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 605C7393224DCE670061491E /* Assets.xcassets */; };
 		605C7397224DCE670061491E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605C7395224DCE670061491E /* LaunchScreen.storyboard */; };
 		605C739A224DCE670061491E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C7399224DCE670061491E /* main.m */; };
@@ -67,19 +63,12 @@
 		34B2A46A40A0651BBE9B375B /* libPods-GKXimalaya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GKXimalaya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6052C1A62252164A009581A0 /* GKListContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKListContainerView.h; sourceTree = "<group>"; };
 		6052C1A72252164A009581A0 /* GKListContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKListContainerView.m; sourceTree = "<group>"; };
-		6052C1AA2253455A009581A0 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
-		6052C1AB2253455A009581A0 /* NewPagedFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowView.m; sourceTree = "<group>"; };
-		6052C1AC2253455A009581A0 /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
-		6052C1AD2253455A009581A0 /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
 		6052C2462260288E009581A0 /* JXCategoryTitleView+GKCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JXCategoryTitleView+GKCategory.h"; sourceTree = "<group>"; };
 		6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JXCategoryTitleView+GKCategory.m"; sourceTree = "<group>"; };
 		605A579F2268888B000265F5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		605C7387224DCE660061491E /* GKXimalaya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKXimalaya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		605C738A224DCE660061491E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		605C738B224DCE660061491E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		605C738D224DCE660061491E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		605C738E224DCE660061491E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		605C7391224DCE660061491E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		605C7393224DCE670061491E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		605C7396224DCE670061491E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		605C7398224DCE670061491E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,17 +162,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		6052C1A92253455A009581A0 /* NewPagedFlowView */ = {
-			isa = PBXGroup;
-			children = (
-				6052C1AD2253455A009581A0 /* NewPagedFlowView.h */,
-				6052C1AB2253455A009581A0 /* NewPagedFlowView.m */,
-				6052C1AC2253455A009581A0 /* PGIndexBannerSubiew.h */,
-				6052C1AA2253455A009581A0 /* PGIndexBannerSubiew.m */,
-			);
-			path = NewPagedFlowView;
-			sourceTree = "<group>";
-		};
 		605C737E224DCE660061491E = {
 			isa = PBXGroup;
 			children = (
@@ -214,16 +192,12 @@
 				799383A922506C2A002F36E5 /* Base */,
 				799383A522506BFE002F36E5 /* Home */,
 				799383AE22506C8A002F36E5 /* Tools */,
-				605C738D224DCE660061491E /* ViewController.h */,
-				605C738E224DCE660061491E /* ViewController.m */,
-				605C7390224DCE660061491E /* Main.storyboard */,
 				605C7393224DCE670061491E /* Assets.xcassets */,
 				605C7395224DCE670061491E /* LaunchScreen.storyboard */,
 				605C7398224DCE670061491E /* Info.plist */,
 				605C7399224DCE670061491E /* main.m */,
 				605C73ED224E03FD0061491E /* PrefixHeader.pch */,
 				605A579F2268888B000265F5 /* README.md */,
-				79E243782250CA9000CE0AED /* ThirdLibs */,
 			);
 			path = GKXimalaya;
 			sourceTree = "<group>";
@@ -288,8 +262,8 @@
 		799383A922506C2A002F36E5 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				79E2439022510DDA00CE0AED /* category */,
 				799383AA22506C30002F36E5 /* viewcontroller */,
+				79E2439022510DDA00CE0AED /* category */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -306,6 +280,7 @@
 		799383AE22506C8A002F36E5 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				79E243782250CA9000CE0AED /* ThirdLibs */,
 				799383AF22506CA0002F36E5 /* GKHttpRequestTool.h */,
 				799383B022506CA0002F36E5 /* GKHttpRequestTool.m */,
 			);
@@ -348,7 +323,6 @@
 		79E243782250CA9000CE0AED /* ThirdLibs */ = {
 			isa = PBXGroup;
 			children = (
-				6052C1A92253455A009581A0 /* NewPagedFlowView */,
 				79E243792250CAAA00CE0AED /* PaletteImage */,
 				605C73D6224DFB460061491E /* SDCycleScrollView */,
 			);
@@ -467,7 +441,7 @@
 		605C737F224DCE660061491E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = gaokun;
 				TargetAttributes = {
 					605C7386224DCE660061491E = {
@@ -511,7 +485,6 @@
 				605C7397224DCE670061491E /* LaunchScreen.storyboard in Resources */,
 				605C7394224DCE670061491E /* Assets.xcassets in Resources */,
 				605A57A02268888B000265F5 /* README.md in Resources */,
-				605C7392224DCE660061491E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,18 +513,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GKXimalaya/Pods-GKXimalaya-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GKXimalaya/Pods-GKXimalaya-resources.sh",
-				"${PODS_ROOT}/GKNavigationBarViewController/GKNavigationBarViewController/GKNavigationBarViewController.bundle",
-				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GKXimalaya/Pods-GKXimalaya-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GKNavigationBarViewController.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -589,7 +553,6 @@
 			files = (
 				79E243742250C2B700CE0AED /* GKHomeBannerModel.m in Sources */,
 				79E2438C2250CAAA00CE0AED /* UIImage+Palette.m in Sources */,
-				605C738F224DCE660061491E /* ViewController.m in Sources */,
 				79E2438A2250CAAA00CE0AED /* Palette.m in Sources */,
 				6052C2482260288E009581A0 /* JXCategoryTitleView+GKCategory.m in Sources */,
 				79E243772250C7EE00CE0AED /* GKHomeBannerViewCell.m in Sources */,
@@ -599,11 +562,9 @@
 				79E2438D2250CAAA00CE0AED /* PaletteColorModel.m in Sources */,
 				79E2438F2250CAAA00CE0AED /* PaletteTarget.m in Sources */,
 				605C73D5224DF8F50061491E /* GKListViewController.m in Sources */,
-				6052C1AF2253455A009581A0 /* NewPagedFlowView.m in Sources */,
 				79E2438B2250CAAA00CE0AED /* PaletteSwatch.m in Sources */,
 				605C73E9224DFB460061491E /* TADotView.m in Sources */,
 				79E2438E2250CAAA00CE0AED /* PriorityBoxArray.m in Sources */,
-				6052C1AE2253455A009581A0 /* PGIndexBannerSubiew.m in Sources */,
 				605C73EB224DFB460061491E /* TAAnimatedDotView.m in Sources */,
 				605C739A224DCE670061491E /* main.m in Sources */,
 				6052C1A82252164A009581A0 /* GKListContainerView.m in Sources */,
@@ -651,14 +612,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		605C7390224DCE660061491E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				605C7391224DCE660061491E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		605C7395224DCE670061491E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

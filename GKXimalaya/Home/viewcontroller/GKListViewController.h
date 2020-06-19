@@ -7,7 +7,7 @@
 //
 
 #import "GKNavigationBarViewController.h"
-#import <JXCategoryView/JXCategoryListCollectionContainerView.h>
+#import <JXCategoryView/JXCategoryListContainerView.h>
 #import "GKHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface GKListViewController : GKNavigationBarViewController<JXCategoryListCollectionContentViewDelegate>
+@interface GKListViewController : GKNavigationBarViewController<JXCategoryListContentViewDelegate>
 
 @property (nonatomic, weak) id<GKListViewControllerDelegate> delegate;
 

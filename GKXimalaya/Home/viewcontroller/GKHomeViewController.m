@@ -11,11 +11,11 @@
 #import "GKHttpRequestTool.h"
 #import "GKHomeModel.h"
 #import <JXCategoryView/JXCategoryView.h>
-#import "GKListContainerView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JXCategoryTitleView+GKCategory.h"
+#import "GKListContainerView.h"
 
-@interface GKHomeViewController()<JXCategoryViewDelegate, JXCategoryListCollectionContainerViewDataSource, GKListContainerViewDelegate, GKListViewControllerDelegate>
+@interface GKHomeViewController()<JXCategoryViewDelegate, JXCategoryListContainerViewDelegate, GKListContainerViewDelegate, GKListViewControllerDelegate>
 
 @property (nonatomic, strong) UIView                *headerBgView;
 @property (nonatomic, strong) UIView                *coverView;
@@ -176,7 +176,7 @@
     NSLog(@"%zd", index);
     
     // 取消所有的选中
-    [self.containerView.validListDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, id<JXCategoryListCollectionContentViewDelegate>  _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.containerView.validListDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, id<JXCategoryListContentViewDelegate>  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[GKListViewController class]]) {
             GKListViewController *listVC = (GKListViewController *)obj;
             listVC.isSelected = NO;
@@ -231,12 +231,12 @@
     }
 }
 
-#pragma mark - JXCategoryListCollectionContainerViewDataSource
-- (NSInteger)numberOfListsInlistContainerView:(JXCategoryListCollectionContainerView *)listContainerView {
+#pragma mark - JXCategoryListContainerViewDelegate
+-  (NSInteger)numberOfListsInlistContainerView:(JXCategoryListContainerView *)listContainerView {
     return self.titles.count;
 }
 
-- (id<JXCategoryListCollectionContentViewDelegate>)listContainerView:(JXCategoryListCollectionContainerView *)listContainerView initListForIndex:(NSInteger)index {
+- (id<JXCategoryListContentViewDelegate>)listContainerView:(JXCategoryListContainerView *)listContainerView initListForIndex:(NSInteger)index {
     GKListViewController *listVC = [GKListViewController new];
     listVC.delegate = self;
     listVC.categoryModel = self.model.customCategoryList[index];
@@ -248,7 +248,7 @@
 #pragma mark - GKListContainerViewDelegate
 - (void)scrollWillBegin {
     // 开始滑动，开始定时器
-    [self.containerView.validListDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, id<JXCategoryListCollectionContentViewDelegate>  _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.containerView.validListDict enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, id<JXCategoryListContentViewDelegate>  _Nonnull obj, BOOL * _Nonnull stop) {
         GKListViewController *listVC = (GKListViewController *)obj;
         [listVC stopScroll];
     }];
@@ -271,7 +271,7 @@
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY <= 0) return;
     
-    if (offsetY > ADAPTATIONRATIO * 300.0f) {
+    if (offsetY > ADAPTATIONRATIO * 360.0f) {
         [self changeToBlackStateAtVC:vc];
     }else {
         [self changeToWhiteStateAtVC:vc];
@@ -323,7 +323,7 @@
         
         _categoryView.indicators    = @[self.lineView];
         
-        _categoryView.contentScrollView = self.containerView.collectionView;
+        _categoryView.listContainer = self.containerView;
     }
     return _categoryView;
 }
@@ -339,12 +339,12 @@
     return _lineView;
 }
 
-- (JXCategoryListCollectionContainerView *)containerView {
+- (GKListContainerView *)containerView {
     if (!_containerView) {
-        _containerView = [GKListContainerView new];
-        _containerView.dataSource = self;
+        _containerView = [[GKListContainerView alloc] initWithType:JXCategoryListContainerType_CollectionView delegate:self];
         _containerView.delegate = self;
-        _containerView.collectionView.backgroundColor = [UIColor clearColor];
+        _containerView.listCellBackgroundColor = [UIColor clearColor];
+        _containerView.scrollView.backgroundColor = [UIColor clearColor];
     }
     return _containerView;
 }

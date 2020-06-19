@@ -8,25 +8,25 @@
 
 #import "GKListViewController.h"
 #import "SDCycleScrollView.h"
-#import "NewPagedFlowView.h"
 #import "GKHttpRequestTool.h"
 #import "GKHomeBannerModel.h"
 #import "GKHomeBannerViewCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+Palette.h"
 #import "UIColor+GKCategory.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <JXCategoryView/JXCategoryView.h>
+#import <GKCycleScrollView/GKCycleScrollView.h>
 
 #define kBannerW (kScreenW - ADAPTATIONRATIO * 60.0f)
 #define kBannerH kBannerW * 335.0f / 839.0f
 
-@interface GKListViewController ()<UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, JXCategoryViewDelegate, NewPagedFlowViewDataSource, NewPagedFlowViewDelegate>
+@interface GKListViewController ()<UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, JXCategoryViewDelegate, GKCycleScrollViewDataSource, GKCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UITableView       *tableView;
 
 @property (nonatomic, strong) UIView            *headerView;
 @property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
-@property (nonatomic, strong) NewPagedFlowView  *flowView;
+@property (nonatomic, strong) GKCycleScrollView *bannerScrollView;
 @property (nonatomic, strong) UIPageControl     *pageControl;
 
 @property (nonatomic, assign) NSInteger         *count;
@@ -88,7 +88,7 @@
 //            // 轮播图
 //             self.cycleScrollView.imageURLStringsGroup = imgUrls;
             self.pageControl.numberOfPages = self.bannerLists.count;
-            [self.flowView reloadData];
+            [self.bannerScrollView reloadData];
             
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"%@", error);
@@ -106,7 +106,7 @@
             
             // 轮播图
             self.pageControl.numberOfPages = self.bannerLists.count;
-            [self.flowView reloadData];
+            [self.bannerScrollView reloadData];
             
 //            NSMutableArray *imgUrls = [NSMutableArray new];
 //            [self.bannerLists enumerateObjectsUsingBlock:^(GKHomeBannerModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -124,7 +124,7 @@
             self.bgColor = [UIColor colorWithHexString:headerBGColor];
             self.titleColor = self.bgColor;
             
-            self.flowView.backgroundColor = self.bgColor;
+            self.bannerScrollView.backgroundColor = self.bgColor;
         }else {
             self.bgColor = [UIColor whiteColor];
             self.titleColor = [UIColor blackColor];
@@ -137,12 +137,12 @@
 
 - (void)startScroll {
 //    [self.cycleScrollView startTimer];
-    [self.flowView startTimer];
+    [self.bannerScrollView startTimer];
 }
 
 - (void)stopScroll {
 //    [self.cycleScrollView stopTimer];
-    [self.flowView stopTimer];
+    [self.bannerScrollView stopTimer];
 }
 
 #pragma mark - JXCategoryListCollectionContentViewDelegate
@@ -184,57 +184,57 @@
     
 }
 
-// 滑动-颜色渐变 - SDCyclScrollView处理方法
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScroll:(UIScrollView *)scrollView {
-    CGFloat offsetX = scrollView.contentOffset.x - scrollView.contentSize.width / 2;
-    
-    CGFloat maxW = self.bannerLists.count * scrollView.bounds.size.width;
-    
-    while (offsetX > maxW) offsetX = offsetX - maxW;    // 左滑
-    while (offsetX < 0) offsetX = offsetX + maxW;       // 右滑
-    
-    CGFloat ratio = (offsetX/scrollView.bounds.size.width);
-//    NSLog(@"%f", ratio);
-    if (ratio > self.bannerLists.count || ratio < 0) {
-        //超过了边界，不需要处理
-        return;
-    }
-    ratio = MAX(0, MIN(self.bannerLists.count, ratio));
-    
-    
-    NSInteger baseIndex = floorf(ratio);
-    
-    if (baseIndex + 1 > self.bannerLists.count) {
-        //右边越界了，不需要处理
-        baseIndex = 0;
-    }
-    NSLog(@"%zd", baseIndex);
-    
-    CGFloat remainderRatio = ratio - baseIndex;
-    
-    if (remainderRatio <= 0 || remainderRatio >= 1) return; // 处理边界
-
-    GKHomeBannerModel *leftModel  = self.bannerLists[baseIndex];
-    
-    NSInteger nextIndex = 0;
-    if (baseIndex == self.bannerLists.count - 1) {
-        nextIndex = 0;
-    }else {
-        nextIndex = baseIndex + 1;
-    }
-    
-    GKHomeBannerModel *rightModel = self.bannerLists[nextIndex];
-
-    UIColor *leftColor  = leftModel.headerBgColor ? leftModel.headerBgColor : GKHomeBGColor;
-    UIColor *rightColor = rightModel.headerBgColor ? rightModel.headerBgColor : GKHomeBGColor;
-
-    UIColor *color = [JXCategoryFactory interpolationColorFrom:leftColor to:rightColor percent:remainderRatio];
-    
-    self.bgColor = color;
-    if (self.isAppear && [self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
-        [self.delegate listVC:self didChangeColor:color];
-    }
-}
+//// 滑动-颜色渐变 - SDCyclScrollView处理方法
+//- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScroll:(UIScrollView *)scrollView {
+//    CGFloat offsetX = scrollView.contentOffset.x - scrollView.contentSize.width / 2;
+//
+//    CGFloat maxW = self.bannerLists.count * scrollView.bounds.size.width;
+//
+//    while (offsetX > maxW) offsetX = offsetX - maxW;    // 左滑
+//    while (offsetX < 0) offsetX = offsetX + maxW;       // 右滑
+//
+//    CGFloat ratio = (offsetX/scrollView.bounds.size.width);
+////    NSLog(@"%f", ratio);
+//    if (ratio > self.bannerLists.count || ratio < 0) {
+//        //超过了边界，不需要处理
+//        return;
+//    }
+//    ratio = MAX(0, MIN(self.bannerLists.count, ratio));
+//
+//
+//    NSInteger baseIndex = floorf(ratio);
+//
+//    if (baseIndex + 1 > self.bannerLists.count) {
+//        //右边越界了，不需要处理
+//        baseIndex = 0;
+//    }
+//    NSLog(@"%zd", baseIndex);
+//
+//    CGFloat remainderRatio = ratio - baseIndex;
+//
+//    if (remainderRatio <= 0 || remainderRatio >= 1) return; // 处理边界
+//
+//    GKHomeBannerModel *leftModel  = self.bannerLists[baseIndex];
+//
+//    NSInteger nextIndex = 0;
+//    if (baseIndex == self.bannerLists.count - 1) {
+//        nextIndex = 0;
+//    }else {
+//        nextIndex = baseIndex + 1;
+//    }
+//
+//    GKHomeBannerModel *rightModel = self.bannerLists[nextIndex];
+//
+//    UIColor *leftColor  = leftModel.headerBgColor ? leftModel.headerBgColor : GKHomeBGColor;
+//    UIColor *rightColor = rightModel.headerBgColor ? rightModel.headerBgColor : GKHomeBGColor;
+//
+//    UIColor *color = [JXCategoryFactory interpolationColorFrom:leftColor to:rightColor percent:remainderRatio];
+//
+//    self.bgColor = color;
+//    if (self.isAppear && [self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
+//        [self.delegate listVC:self didChangeColor:color];
+//    }
+//}
 
 // 自定义cell
 - (Class)customCollectionViewCellClassForCycleScrollView:(SDCycleScrollView *)view {
@@ -261,27 +261,26 @@
     }];
 }
 
-#pragma mark - NewPagedFlowViewDataSource
-- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+#pragma mark - GKCycleScrollViewDataSource
+- (NSInteger)numberOfCellsInCycleScrollView:(GKCycleScrollView *)cycleScrollView {
     return self.bannerLists.count;
 }
 
-- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index {
-    PGIndexBannerSubiew *bannerView = [flowView dequeueReusableCell];
-    if (!bannerView) {
-        bannerView = [PGIndexBannerSubiew new];
-        bannerView.tag = index;
-        bannerView.layer.cornerRadius  = 4.0f;
-        bannerView.layer.masksToBounds = YES;
+- (GKCycleScrollViewCell *)cycleScrollView:(GKCycleScrollView *)cycleScrollView cellForViewAtIndex:(NSInteger)index {
+    GKCycleScrollViewCell *cell = [cycleScrollView dequeueReusableCell];
+    if (!cell) {
+        cell = [GKCycleScrollViewCell new];
+        cell.tag = index;
+        cell.layer.cornerRadius = 10.0f;
+        cell.layer.masksToBounds = YES;
     }
-    GKHomeBannerModel *model = self.bannerLists[index];
     
-    [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:model.cover] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    GKHomeBannerModel *model = self.bannerLists[index];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.cover] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (!model.headerBgColor) {
             model.headerBgColor = [UIColor colorWithMostImage:image scale:0.05];
-//            model.headerBgColor = GKColorRandom;
             
-            if (index == self.flowView.currentPageIndex) {
+            if (index == self.bannerScrollView.currentSelectIndex) {
                 self.bgColor = model.headerBgColor;
                 
                 if ([self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
@@ -290,29 +289,18 @@
             }
         }
     }];
-    
-    return bannerView;
+    return cell;
 }
 
-#pragma mark - NewPagedFlowViewDelegate
-- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+#pragma mark - GKCycleScrollViewDelegate
+- (CGSize)sizeForCellInCycleScrollView:(GKCycleScrollView *)cycleScrollView {
     return CGSizeMake(kBannerW, kBannerH);
 }
 
-- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    
-}
-
-- (void)didSelectCell:(PGIndexBannerSubiew *)subView withSubViewIndex:(NSInteger)subIndex {
-    
-}
-
-// 颜色渐变-NewPagedFlowView处理方法
-- (void)flowView:(NewPagedFlowView *)flowView didScroll:(UIScrollView *)scrollView {
+- (void)cycleScrollView:(GKCycleScrollView *)cycleScrollView didScroll:(UIScrollView *)scrollView {
     if (self.isCriticalPoint) return;
     
     CGFloat offsetX = scrollView.contentOffset.x;
-    
     CGFloat maxW = self.bannerLists.count * scrollView.bounds.size.width;
     
     CGFloat changeOffsetX = offsetX - maxW;
@@ -326,17 +314,15 @@
     
     CGFloat ratio = (changeOffsetX / scrollView.bounds.size.width);
     
-    if (ratio > self.bannerLists.count || ratio < 0) {
-        //超过了边界，不需要处理
-        return;
-    }
+    // 超过了边界，不需要处理
+    if (ratio > self.bannerLists.count || ratio < 0) return;
     
     ratio = MAX(0, MIN(self.bannerLists.count, ratio));
     
     NSInteger baseIndex = floorf(ratio);
     
+    // 最后一个
     if (baseIndex + 1 > self.bannerLists.count) {
-        //右边越界了，不需要处理
         baseIndex = 0;
     }
     
@@ -387,7 +373,7 @@
         _headerView.backgroundColor = [UIColor clearColor];
         
 //        [_headerView addSubview:self.cycleScrollView];
-        [_headerView addSubview:self.flowView];
+        [_headerView addSubview:self.bannerScrollView];
     }
     return _headerView;
 }
@@ -403,22 +389,21 @@
     return _cycleScrollView;
 }
 
-- (NewPagedFlowView *)flowView {
-    if (!_flowView) {
-        _flowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, ADAPTATIONRATIO * 360.0f)];
-        _flowView.dataSource = self;
-        _flowView.delegate = self;
-        _flowView.topBottomMargin = ADAPTATIONRATIO * 16.0;
-        _flowView.leftRightMargin = ADAPTATIONRATIO * 60.0f;
-        _flowView.minimumPageAlpha = 0.5f;
+- (GKCycleScrollView *)bannerScrollView {
+    if (!_bannerScrollView) {
+        _bannerScrollView = [[GKCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, ADAPTATIONRATIO * 360.0f)];
+        _bannerScrollView.dataSource = self;
+        _bannerScrollView.delegate = self;
+        _bannerScrollView.leftRightMargin = ADAPTATIONRATIO * 60.0f;
+        _bannerScrollView.minimumCellAlpha = 0.5f;
         
-        [_flowView addSubview:self.pageControl];
-        _flowView.pageControl = self.pageControl;
+        [_bannerScrollView addSubview:self.pageControl];
+        _bannerScrollView.pageControl = self.pageControl;
         
         CGPoint point = CGPointMake(kScreenW * 0.5f, ADAPTATIONRATIO * 300.0f);
         _pageControl.center = point;
     }
-    return _flowView;
+    return _bannerScrollView;
 }
 
 - (UIPageControl *)pageControl {
