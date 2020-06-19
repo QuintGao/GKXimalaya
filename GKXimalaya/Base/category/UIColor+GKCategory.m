@@ -113,31 +113,4 @@
     return [UIColor colorWithRed:((float) r / 255.0f) green:((float) g / 255.0f) blue:((float) b / 255.0f) alpha:1.0f];
 }
 
-+ (NSString *)hexFromUIColor:(UIColor *)color {
-//    if (CGColorGetNumberOfComponents(color.CGColor) < 4) {
-//        const CGFloat *components = CGColorGetComponents(color.CGColor);
-//        color = [UIColor colorWithRed:components[0]
-//                                green:components[0]
-//                                 blue:components[0]
-//                                alpha:components[1]];
-//    }
-//
-//    if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) != kCGColorSpaceModelRGB) {
-//        return [NSString stringWithFormat:@"#FFFFFF"];
-//    }
-//
-//    return [NSString stringWithFormat:@"#%2d%2d%2d", (int)((CGColorGetComponents(color.CGColor))[0]*255.0),
-//            (int)((CGColorGetComponents(color.CGColor))[1]*255.0),
-//            (int)((CGColorGetComponents(color.CGColor))[2]*255.0)];
-    
-    CGFloat r, g, b, a;
-    [color getRed:&r green:&g blue:&b alpha:&a];
-    int rgb = (int)(r * 255.0f)<<16 | (int)(g * 255.0f)<<8 | (int)(b * 255.0f)<<0;
-//    if (hasAlpha) {
-//        rgb = (int)(a * 255.0f)<<24 | (int)(r * 255.0f)<<16 | (int)(g * 255.0f)<<8 | (int)(b * 255.0f)<<0;
-//    }
-    
-    return [NSString stringWithFormat:@"%06x", rgb];
-}
-
 @end
