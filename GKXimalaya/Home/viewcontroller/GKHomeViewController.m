@@ -11,7 +11,7 @@
 #import "GKHttpRequestTool.h"
 #import "GKHomeModel.h"
 #import <JXCategoryView/JXCategoryView.h>
-#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDWebImage.h>
 #import "JXCategoryTitleView+GKCategory.h"
 #import "GKListContainerView.h"
 
