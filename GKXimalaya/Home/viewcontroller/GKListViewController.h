@@ -6,8 +6,8 @@
 //  Copyright © 2019 gaokun. All rights reserved.
 //
 
-#import "GKNavigationBarViewController.h"
-#import <JXCategoryView/JXCategoryListContainerView.h>
+#import <GKNavigationBar/GKNavigationBar.h>
+#import <JXCategoryViewExt/JXCategoryView.h>
 #import "GKHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface GKListViewController : GKNavigationBarViewController<JXCategoryListContentViewDelegate>
+@interface GKListViewController : UIViewController<JXCategoryListContentViewDelegate>
 
 @property (nonatomic, weak) id<GKListViewControllerDelegate> delegate;
 

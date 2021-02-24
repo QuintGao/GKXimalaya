@@ -31,6 +31,9 @@
 @property (nonatomic, strong) NSMutableArray *reusableCells;
 @property (nonatomic, assign) NSRange        visibleRange;
 
+// 处理xib加载时导致的尺寸不准确问题
+@property (nonatomic, assign) CGSize        originSize;
+
 @end
 
 @implementation GKCycleScrollView
@@ -48,6 +51,17 @@
         [self initialization];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (CGSizeEqualToSize(self.originSize, CGSizeZero)) return;
+    
+    // 解决xib加载时导致的布局错误问题
+    if (!CGSizeEqualToSize(self.bounds.size, self.originSize)) {
+        [self updateScrollViewAndCellSize];
+    }
 }
 
 // 解决当父视图释放时，当前视图因为NSTimer强引用而导致的不能释放
@@ -73,15 +87,18 @@
             
             if (self.direction == GKCycleScrollViewScrollDirectionHorizontal) {
                 convertFrame.origin.x = cell.frame.origin.x + self.scrollView.frame.origin.x - self.scrollView.contentOffset.x;
-                convertFrame.origin.y = 0;
+                convertFrame.origin.y = self.scrollView.frame.origin.y + cell.frame.origin.y;
             }else {
-                convertFrame.origin.x = 0;
+                convertFrame.origin.x = self.scrollView.frame.origin.x + cell.frame.origin.x;
                 convertFrame.origin.y = cell.frame.origin.y + self.scrollView.frame.origin.y - self.scrollView.contentOffset.y;
             }
 
             // 判断点击的点是否在cell上
             if (CGRectContainsPoint(convertFrame, point)) {
-                return cell;
+                // 修复cell上添加其他点击事件无效的bug
+                UIView *view = [super hitTest:point withEvent:event];
+                if (view == self || view == cell || view == self.scrollView) return cell;
+                return view;
             }
         }
         // 判断点击的点是否在UIScrollView上
@@ -91,7 +108,6 @@
         if ([self.scrollView pointInside:newPoint withEvent:event]) {
             return [self.scrollView hitTest:newPoint withEvent:event];
         }
-        
         // 系统处理
         return [super hitTest:point withEvent:event];
     }
@@ -113,7 +129,7 @@
         
         // 展示个数
         if (self.isInfiniteLoop) {
-            self.showCount = self.realCount == 1 ? 1: self.realCount * 3;
+            self.showCount = self.realCount == 1 ? 1 : self.realCount * 3;
         }else {
             self.showCount = self.realCount;
         }
@@ -137,13 +153,12 @@
     
     if (self.bounds.size.width <= 0 || self.bounds.size.height <= 0) {
         [self.superview layoutIfNeeded];
-        
         // 此处做延时处理是为了解决使用Masonry布局时导致的view的大小不能及时更新的bug
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self updateScrollViewAndCellSize];
+            [self initialScrollViewAndCellSize];
         });
     }else {
-        [self updateScrollViewAndCellSize];
+        [self initialScrollViewAndCellSize];
     }
 }
 
@@ -230,6 +245,16 @@
     [self addSubview:self.scrollView];
 }
 
+- (void)initialScrollViewAndCellSize {
+    self.originSize = self.bounds.size;
+    [self updateScrollViewAndCellSize];
+    
+    // 默认选中
+    if (self.defaultSelectIndex >= 0 && self.defaultSelectIndex < self.realCount) {
+        [self handleCellScrollWithIndex:self.defaultSelectIndex];
+    }
+}
+
 - (void)updateScrollViewAndCellSize {
     if (self.bounds.size.width <= 0 || self.bounds.size.height <= 0) return;
     
@@ -301,14 +326,10 @@
     
     // 更新可见cell的显示
     [self updateVisibleCellAppearance];
-    
-    // 默认选中
-    if (self.defaultSelectIndex >= 0 && self.defaultSelectIndex < self.realCount) {
-        [self handleCellScrollWithIndex:self.defaultSelectIndex];
-    }
 }
 
 - (void)setupCellsWithContentOffset:(CGPoint)offset {
+    if (self.showCount == 0) return;
     if (self.cellSize.width <= 0 || self.cellSize.height <= 0) return;
     //计算_visibleRange
     CGPoint startPoint = CGPointMake(offset.x - self.scrollView.frame.origin.x, offset.y - self.scrollView.frame.origin.y);
@@ -393,6 +414,7 @@
 }
 
 - (void)updateVisibleCellAppearance {
+    if (self.showCount == 0) return;
     if (self.cellSize.width <= 0 || self.cellSize.height <= 0) return;
     
     switch (self.direction) {
@@ -418,7 +440,7 @@
                     leftRightInset = adjustLeftRightMargin * delta / self.cellSize.width;
                     topBottomInset = adjustTopBottomMargin * delta / self.cellSize.width;
                     
-                    NSInteger index = i % self.realCount;
+                    NSInteger index = self.realCount == 0 ? 0 : i % self.realCount;
                     if (index == self.currentSelectIndex) {
                         [self.scrollView bringSubviewToFront:cell];
                     }
@@ -476,7 +498,7 @@
                     leftRightInset = adjustLeftRightMargin * delta / self.cellSize.height;
                     topBottomInset = adjustTopBottomMargin * delta / self.cellSize.height;
                     
-                    NSInteger index = i % self.realCount;
+                    NSInteger index = self.realCount == 0 ? 0 : i % self.realCount;
                     if (index == self.currentSelectIndex) {
                         [self.scrollView bringSubviewToFront:cell];
                     }
@@ -518,31 +540,32 @@
     GKCycleScrollViewCell *cell = self.visibleCells[index];
     if ((NSObject *)cell == [NSNull null]) {
         cell = [self.dataSource cycleScrollView:self cellForViewAtIndex:index % self.realCount];
-        NSAssert(cell!=nil, @"datasource must not return nil");
-        [self.visibleCells replaceObjectAtIndex:index withObject:cell];
-        
-        cell.tag = index % self.realCount;
-        [cell setupCellFrame:CGRectMake(0, 0, self.cellSize.width, self.cellSize.height)];
-        if (!self.isChangeAlpha) cell.coverView.hidden = YES;
-        
-        __weak __typeof(self) weakSelf = self;
-        cell.didCellClick = ^(NSInteger index) {
-            [weakSelf handleCellSelectWithIndex:index];
-        };
-        
-        switch (self.direction) {
-            case GKCycleScrollViewScrollDirectionHorizontal:
-                cell.frame = CGRectMake(self.cellSize.width * index, 0, self.cellSize.width, self.cellSize.height);
-                break;
-            case GKCycleScrollViewScrollDirectionVertical:
-                cell.frame = CGRectMake(0, self.cellSize.height * index, self.cellSize.width, self.cellSize.height);
-                break;
-            default:
-                break;
-        }
-        
-        if (!cell.superview) {
-            [self.scrollView addSubview:cell];
+        if (cell) {
+            [self.visibleCells replaceObjectAtIndex:index withObject:cell];
+            
+            cell.tag = index % self.realCount;
+            [cell setupCellFrame:CGRectMake(0, 0, self.cellSize.width, self.cellSize.height)];
+            if (!self.isChangeAlpha) cell.coverView.hidden = YES;
+            
+            __weak __typeof(self) weakSelf = self;
+            cell.didCellClick = ^(NSInteger index) {
+                [weakSelf handleCellSelectWithIndex:index];
+            };
+            
+            switch (self.direction) {
+                case GKCycleScrollViewScrollDirectionHorizontal:
+                    cell.frame = CGRectMake(self.cellSize.width * index, 0, self.cellSize.width, self.cellSize.height);
+                    break;
+                case GKCycleScrollViewScrollDirectionVertical:
+                    cell.frame = CGRectMake(0, self.cellSize.height * index, self.cellSize.width, self.cellSize.height);
+                    break;
+                default:
+                    break;
+            }
+            
+            if (!cell.superview) {
+                [self.scrollView addSubview:cell];
+            }
         }
     }
 }
@@ -678,9 +701,7 @@
         [self handleCellScrollWithIndex:index];
     }
     
-    if ([self.delegate respondsToSelector:@selector(cycleScrollView:didScroll:)]) {
-        [self.delegate cycleScrollView:self didScroll:scrollView];
-    }
+    [self handleScrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -741,6 +762,58 @@
     
     if ([self.delegate respondsToSelector:@selector(cycleScrollView:didEndScrollingAnimation:)]) {
         [self.delegate cycleScrollView:self didEndScrollingAnimation:scrollView];
+    }
+}
+
+- (void)handleScrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(cycleScrollView:didScroll:)]) {
+        [self.delegate cycleScrollView:self didScroll:scrollView];
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(cycleScrollView:scrollingFromIndex:toIndex:ratio:)]) {
+        BOOL isFirstRevirse = NO; // 是否在第一个位置反向滑动
+        CGFloat ratio = 0;   // 滑动百分比
+        if (self.direction == GKCycleScrollViewScrollDirectionHorizontal) {
+            CGFloat offsetX = scrollView.contentOffset.x;
+            CGFloat maxW = self.realCount * scrollView.bounds.size.width;
+            
+            CGFloat changeOffsetX = self.isInfiniteLoop ? (offsetX - maxW) : offsetX;
+            if (changeOffsetX < 0) {
+                changeOffsetX = -changeOffsetX;
+                isFirstRevirse = YES;
+            }
+            ratio = (changeOffsetX / scrollView.bounds.size.width);
+        }else if (self.direction == GKCycleScrollViewScrollDirectionVertical) {
+            CGFloat offsetY = scrollView.contentOffset.y;
+            CGFloat maxW = self.realCount * scrollView.bounds.size.height;
+            
+            CGFloat changeOffsetY = self.isInfiniteLoop ? (offsetY - maxW) : offsetY;
+            if (changeOffsetY < 0) {
+                changeOffsetY = -changeOffsetY;
+                isFirstRevirse = YES;
+            }
+            ratio = (changeOffsetY / scrollView.bounds.size.height);
+        }
+        if (ratio > self.realCount || ratio < 0) return; // 越界，不作处理
+        ratio = MAX(0, MIN(self.realCount, ratio));
+        NSInteger baseIndex = floor(ratio);
+        if (baseIndex + 1 > self.realCount) {
+            // 右边越界了
+            baseIndex = 0;
+        }
+        CGFloat remainderRatio = ratio - baseIndex;
+        if (remainderRatio <= 0 || remainderRatio >= 1) return;
+        NSInteger toIndex = 0;
+        if (isFirstRevirse) {
+            baseIndex = self.realCount - 1;
+            toIndex = 0;
+            remainderRatio = 1 - remainderRatio;
+        }else if (baseIndex == self.realCount - 1) {
+            toIndex = 0;
+        }else {
+            toIndex = baseIndex + 1;
+        }
+        [self.delegate cycleScrollView:self scrollingFromIndex:baseIndex toIndex:toIndex ratio:remainderRatio];
     }
 }
 

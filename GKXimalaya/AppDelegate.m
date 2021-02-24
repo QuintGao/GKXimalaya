@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import "GKHomeViewController.h"
-#import <JXCategoryView/JXCategoryView.h>
 #import "UIColor+GKCategory.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface AppDelegate ()
 

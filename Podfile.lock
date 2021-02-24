@@ -14,21 +14,32 @@ PODS:
   - AFNetworking/Serialization (4.0.1)
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
-  - GKCycleScrollView (0.0.5)
-  - GKNavigationBarViewController (2.5.0)
-  - JXCategoryView (1.5.5)
+  - GKCycleScrollView (1.0.6)
+  - GKNavigationBar (1.4.3):
+    - GKNavigationBar/GestureHandle (= 1.4.3)
+    - GKNavigationBar/NavigationBar (= 1.4.3)
+  - GKNavigationBar/GestureHandle (1.4.3)
+  - GKNavigationBar/NavigationBar (1.4.3)
+  - JXCategoryViewExt/Core (1.0.3)
+  - JXCategoryViewExt/Indicator/Line (1.0.3):
+    - JXCategoryViewExt/Core
+  - JXCategoryViewExt/Title (1.0.3):
+    - JXCategoryViewExt/Core
+  - JXCategoryViewExt/TitleImage (1.0.3):
+    - JXCategoryViewExt/Title
   - Masonry (1.1.0)
-  - MJRefresh (3.4.3)
-  - SDWebImage (5.8.1):
-    - SDWebImage/Core (= 5.8.1)
-  - SDWebImage/Core (5.8.1)
+  - MJRefresh (3.5.0)
+  - SDWebImage (5.10.4):
+    - SDWebImage/Core (= 5.10.4)
+  - SDWebImage/Core (5.10.4)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking
-  - GKCycleScrollView
-  - GKNavigationBarViewController
-  - JXCategoryView
+  - GKCycleScrollView (= 1.0.6)
+  - GKNavigationBar
+  - JXCategoryViewExt/Indicator/Line
+  - JXCategoryViewExt/TitleImage
   - Masonry
   - MJRefresh
   - SDWebImage
@@ -38,8 +49,8 @@ SPEC REPOS:
   trunk:
     - AFNetworking
     - GKCycleScrollView
-    - GKNavigationBarViewController
-    - JXCategoryView
+    - GKNavigationBar
+    - JXCategoryViewExt
     - Masonry
     - MJRefresh
     - SDWebImage
@@ -47,14 +58,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
-  GKCycleScrollView: 8de14b020ba104e9b252425c5c3535ec645b471d
-  GKNavigationBarViewController: 98e7c81695a2e4735ef9d5682303834866ba66f9
-  JXCategoryView: 0293fcb356f10a5c2e679dac0a1a5f1899ee0c87
+  GKCycleScrollView: 3afe655bbaa2a25217781ec7a0c387f17625fc90
+  GKNavigationBar: f94a0be7ad4c6c9a33219d471905f767f9c09a53
+  JXCategoryViewExt: b587d982a33b94fb629afccbffff18047a2e2a80
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
-  SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
+  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 48411b7883561521733deded891e3bd2a55f7665
+PODFILE CHECKSUM: ebef891d700eb505308dbe7afd43d96a8ba0a10f
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

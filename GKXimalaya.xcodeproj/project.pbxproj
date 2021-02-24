@@ -8,23 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		4A56EF401D18ACE4713AE07A /* libPods-GKXimalaya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B2A46A40A0651BBE9B375B /* libPods-GKXimalaya.a */; };
+		6021220525E640F8000FC505 /* JXCategoryTitleView+GKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6021220425E640F8000FC505 /* JXCategoryTitleView+GKCategory.m */; };
 		6052C1A82252164A009581A0 /* GKListContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C1A72252164A009581A0 /* GKListContainerView.m */; };
-		6052C2482260288E009581A0 /* JXCategoryTitleView+GKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */; };
-		605A57A02268888B000265F5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 605A579F2268888B000265F5 /* README.md */; };
 		605C738C224DCE660061491E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738B224DCE660061491E /* AppDelegate.m */; };
+		605C738F224DCE660061491E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C738E224DCE660061491E /* ViewController.m */; };
+		605C7392224DCE660061491E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605C7390224DCE660061491E /* Main.storyboard */; };
 		605C7394224DCE670061491E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 605C7393224DCE670061491E /* Assets.xcassets */; };
 		605C7397224DCE670061491E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605C7395224DCE670061491E /* LaunchScreen.storyboard */; };
 		605C739A224DCE670061491E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C7399224DCE670061491E /* main.m */; };
 		605C73A4224DCE670061491E /* GKXimalayaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73A3224DCE670061491E /* GKXimalayaTests.m */; };
 		605C73AF224DCE670061491E /* GKXimalayaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73AE224DCE670061491E /* GKXimalayaUITests.m */; };
 		605C73D5224DF8F50061491E /* GKListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73D4224DF8F50061491E /* GKListViewController.m */; };
-		605C73E6224DFB460061491E /* SDCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73DA224DFB460061491E /* SDCycleScrollView.m */; };
-		605C73E7224DFB460061491E /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73DB224DFB460061491E /* UIView+SDExtension.m */; };
-		605C73E8224DFB460061491E /* SDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73DC224DFB460061491E /* SDCollectionViewCell.m */; };
-		605C73E9224DFB460061491E /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73DF224DFB460061491E /* TADotView.m */; };
-		605C73EA224DFB460061491E /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73E0224DFB460061491E /* TAPageControl.m */; };
-		605C73EB224DFB460061491E /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73E1224DFB460061491E /* TAAnimatedDotView.m */; };
-		605C73EC224DFB460061491E /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605C73E2224DFB460061491E /* TAAbstractDotView.m */; };
 		799383A822506C26002F36E5 /* GKBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799383A722506C26002F36E5 /* GKBaseViewController.m */; };
 		799383AD22506C66002F36E5 /* GKHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799383AC22506C66002F36E5 /* GKHomeViewController.m */; };
 		799383B122506CA0002F36E5 /* GKHttpRequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 799383B022506CA0002F36E5 /* GKHttpRequestTool.m */; };
@@ -61,14 +55,16 @@
 /* Begin PBXFileReference section */
 		1FFB0D615EE8594148D9428D /* Pods-GKXimalaya.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKXimalaya.debug.xcconfig"; path = "Target Support Files/Pods-GKXimalaya/Pods-GKXimalaya.debug.xcconfig"; sourceTree = "<group>"; };
 		34B2A46A40A0651BBE9B375B /* libPods-GKXimalaya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GKXimalaya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6021220325E640F8000FC505 /* JXCategoryTitleView+GKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JXCategoryTitleView+GKCategory.h"; sourceTree = "<group>"; };
+		6021220425E640F8000FC505 /* JXCategoryTitleView+GKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JXCategoryTitleView+GKCategory.m"; sourceTree = "<group>"; };
 		6052C1A62252164A009581A0 /* GKListContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKListContainerView.h; sourceTree = "<group>"; };
 		6052C1A72252164A009581A0 /* GKListContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKListContainerView.m; sourceTree = "<group>"; };
-		6052C2462260288E009581A0 /* JXCategoryTitleView+GKCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JXCategoryTitleView+GKCategory.h"; sourceTree = "<group>"; };
-		6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JXCategoryTitleView+GKCategory.m"; sourceTree = "<group>"; };
-		605A579F2268888B000265F5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		605C7387224DCE660061491E /* GKXimalaya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKXimalaya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		605C738A224DCE660061491E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		605C738B224DCE660061491E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		605C738D224DCE660061491E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		605C738E224DCE660061491E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		605C7391224DCE660061491E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		605C7393224DCE670061491E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		605C7396224DCE670061491E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		605C7398224DCE670061491E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,12 +188,15 @@
 				799383A922506C2A002F36E5 /* Base */,
 				799383A522506BFE002F36E5 /* Home */,
 				799383AE22506C8A002F36E5 /* Tools */,
+				605C738D224DCE660061491E /* ViewController.h */,
+				605C738E224DCE660061491E /* ViewController.m */,
+				605C7390224DCE660061491E /* Main.storyboard */,
 				605C7393224DCE670061491E /* Assets.xcassets */,
 				605C7395224DCE670061491E /* LaunchScreen.storyboard */,
 				605C7398224DCE670061491E /* Info.plist */,
 				605C7399224DCE670061491E /* main.m */,
 				605C73ED224E03FD0061491E /* PrefixHeader.pch */,
-				605A579F2268888B000265F5 /* README.md */,
+				79E243782250CA9000CE0AED /* ThirdLibs */,
 			);
 			path = GKXimalaya;
 			sourceTree = "<group>";
@@ -262,8 +261,8 @@
 		799383A922506C2A002F36E5 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				799383AA22506C30002F36E5 /* viewcontroller */,
 				79E2439022510DDA00CE0AED /* category */,
+				799383AA22506C30002F36E5 /* viewcontroller */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -280,7 +279,6 @@
 		799383AE22506C8A002F36E5 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				79E243782250CA9000CE0AED /* ThirdLibs */,
 				799383AF22506CA0002F36E5 /* GKHttpRequestTool.h */,
 				799383B022506CA0002F36E5 /* GKHttpRequestTool.m */,
 			);
@@ -363,8 +361,8 @@
 			children = (
 				79E2439122510E1300CE0AED /* UIColor+GKCategory.h */,
 				79E2439222510E1300CE0AED /* UIColor+GKCategory.m */,
-				6052C2462260288E009581A0 /* JXCategoryTitleView+GKCategory.h */,
-				6052C2472260288E009581A0 /* JXCategoryTitleView+GKCategory.m */,
+				6021220325E640F8000FC505 /* JXCategoryTitleView+GKCategory.h */,
+				6021220425E640F8000FC505 /* JXCategoryTitleView+GKCategory.m */,
 			);
 			path = category;
 			sourceTree = "<group>";
@@ -441,7 +439,7 @@
 		605C737F224DCE660061491E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = gaokun;
 				TargetAttributes = {
 					605C7386224DCE660061491E = {
@@ -484,7 +482,7 @@
 			files = (
 				605C7397224DCE670061491E /* LaunchScreen.storyboard in Resources */,
 				605C7394224DCE670061491E /* Assets.xcassets in Resources */,
-				605A57A02268888B000265F5 /* README.md in Resources */,
+				605C7392224DCE660061491E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,8 +551,8 @@
 			files = (
 				79E243742250C2B700CE0AED /* GKHomeBannerModel.m in Sources */,
 				79E2438C2250CAAA00CE0AED /* UIImage+Palette.m in Sources */,
+				605C738F224DCE660061491E /* ViewController.m in Sources */,
 				79E2438A2250CAAA00CE0AED /* Palette.m in Sources */,
-				6052C2482260288E009581A0 /* JXCategoryTitleView+GKCategory.m in Sources */,
 				79E243772250C7EE00CE0AED /* GKHomeBannerViewCell.m in Sources */,
 				79E2439322510E1300CE0AED /* UIColor+GKCategory.m in Sources */,
 				79E2436B2250A20600CE0AED /* GKHomeModel.m in Sources */,
@@ -563,20 +561,14 @@
 				79E2438F2250CAAA00CE0AED /* PaletteTarget.m in Sources */,
 				605C73D5224DF8F50061491E /* GKListViewController.m in Sources */,
 				79E2438B2250CAAA00CE0AED /* PaletteSwatch.m in Sources */,
-				605C73E9224DFB460061491E /* TADotView.m in Sources */,
 				79E2438E2250CAAA00CE0AED /* PriorityBoxArray.m in Sources */,
-				605C73EB224DFB460061491E /* TAAnimatedDotView.m in Sources */,
 				605C739A224DCE670061491E /* main.m in Sources */,
 				6052C1A82252164A009581A0 /* GKListContainerView.m in Sources */,
 				605C738C224DCE660061491E /* AppDelegate.m in Sources */,
-				605C73E7224DFB460061491E /* UIView+SDExtension.m in Sources */,
 				79E243892250CAAA00CE0AED /* PaletteColorUtils.m in Sources */,
-				605C73E6224DFB460061491E /* SDCycleScrollView.m in Sources */,
-				605C73E8224DFB460061491E /* SDCollectionViewCell.m in Sources */,
 				799383A822506C26002F36E5 /* GKBaseViewController.m in Sources */,
 				799383AD22506C66002F36E5 /* GKHomeViewController.m in Sources */,
-				605C73EC224DFB460061491E /* TAAbstractDotView.m in Sources */,
-				605C73EA224DFB460061491E /* TAPageControl.m in Sources */,
+				6021220525E640F8000FC505 /* JXCategoryTitleView+GKCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +604,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		605C7390224DCE660061491E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				605C7391224DCE660061491E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		605C7395224DCE670061491E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -740,8 +740,7 @@
 			baseConfigurationReference = 1FFB0D615EE8594148D9428D /* Pods-GKXimalaya.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = X52753HQNM;
+				CODE_SIGN_STYLE = Automatic;
 				GCC_PREFIX_HEADER = GKXimalaya/PrefixHeader.pch;
 				INFOPLIST_FILE = GKXimalaya/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -749,9 +748,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.GKXimalaya;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aiyinsitanfm.GKXimalaya;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = aystfm_dev_test;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -761,8 +759,7 @@
 			baseConfigurationReference = 81A07AFAAFD25EDC5560F265 /* Pods-GKXimalaya.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = X52753HQNM;
+				CODE_SIGN_STYLE = Automatic;
 				GCC_PREFIX_HEADER = GKXimalaya/PrefixHeader.pch;
 				INFOPLIST_FILE = GKXimalaya/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -770,9 +767,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.GKXimalaya;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aiyinsitanfm.GKXimalaya;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = aystfm_dev_test;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

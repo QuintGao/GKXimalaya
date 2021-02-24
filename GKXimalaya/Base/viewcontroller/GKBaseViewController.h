@@ -6,11 +6,11 @@
 //  Copyright © 2019 gaokun. All rights reserved.
 //
 
-#import <GKNavigationBarViewController/GKNavigationBarViewController.h>
+#import <GKNavigationBar/GKNavigationBar.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GKBaseViewController : GKNavigationBarViewController
+@interface GKBaseViewController : UIViewController
 
 @end
 

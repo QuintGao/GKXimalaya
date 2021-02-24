@@ -7,25 +7,23 @@
 //
 
 #import "GKListViewController.h"
-#import "SDCycleScrollView.h"
 #import "GKHttpRequestTool.h"
 #import "GKHomeBannerModel.h"
 #import "GKHomeBannerViewCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <JXCategoryViewExt/JXCategoryView.h>
 #import "UIImage+Palette.h"
 #import "UIColor+GKCategory.h"
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <JXCategoryView/JXCategoryView.h>
 #import <GKCycleScrollView/GKCycleScrollView.h>
 
 #define kBannerW (kScreenW - ADAPTATIONRATIO * 60.0f)
 #define kBannerH kBannerW * 335.0f / 839.0f
 
-@interface GKListViewController ()<UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, JXCategoryViewDelegate, GKCycleScrollViewDataSource, GKCycleScrollViewDelegate>
+@interface GKListViewController ()<UITableViewDataSource, UITableViewDelegate, JXCategoryViewDelegate, GKCycleScrollViewDataSource, GKCycleScrollViewDelegate>
 
 @property (nonatomic, strong) UITableView       *tableView;
 
 @property (nonatomic, strong) UIView            *headerView;
-@property (nonatomic, strong) SDCycleScrollView *cycleScrollView;
 @property (nonatomic, strong) GKCycleScrollView *bannerScrollView;
 @property (nonatomic, strong) UIPageControl     *pageControl;
 
@@ -88,6 +86,7 @@
 //            // 轮播图
 //             self.cycleScrollView.imageURLStringsGroup = imgUrls;
             self.pageControl.numberOfPages = self.bannerLists.count;
+//            [self.flowView reloadData];
             [self.bannerScrollView reloadData];
             
         } failure:^(NSError * _Nonnull error) {
@@ -106,6 +105,7 @@
             
             // 轮播图
             self.pageControl.numberOfPages = self.bannerLists.count;
+//            [self.flowView reloadData];
             [self.bannerScrollView reloadData];
             
 //            NSMutableArray *imgUrls = [NSMutableArray new];
@@ -116,7 +116,22 @@
 //            // SDCycleScrollView
 //             self.cycleScrollView.imageURLStringsGroup = imgUrls;
         } failure:^(NSError * _Nonnull error) {
-            NSLog(@"%@", error);
+            NSArray *banners = @[@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604640925739&di=cd001f10dfe79dffdc3ab56d70a8f2c9&imgtype=0&src=http%3A%2F%2Fp0.qhmsg.com%2Ft0133662f4be7939166.jpg", @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604640924880&di=3723a43ebb2720c4800bdf57b744f5f5&imgtype=0&src=http%3A%2F%2Fimg.ewebweb.com%2Fuploads%2F20190403%2F15%2F1554275567-BAZdrhRItG.jpg", @"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3549859657,668339084&fm=26&gp=0.jpg", @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604640924879&di=5ef347a866fe08ea5dd7582a7f3f2f0c&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-12-12%2F5a2f7774d280e.jpg", @"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1443270937,1017525655&fm=26&gp=0.jpg"];
+            
+            [banners enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                GKHomeBannerModel *model = [GKHomeBannerModel new];
+                model.cover = obj;
+                [self.bannerLists addObject:model];
+                if (idx == 0) {
+                    model.headerBgColor = UIColor.greenColor;
+                }else if (idx == banners.count - 1) {
+                    model.headerBgColor = UIColor.redColor;
+                }
+            }];
+            self.pageControl.numberOfPages = self.bannerLists.count;
+            [self.bannerScrollView reloadData];
+            
+            self.bgColor = [self.bannerLists.firstObject headerBgColor];
         }];
     }else {
         NSString *headerBGColor = self.categoryModel.tabTheme[@"headerBGColor"];
@@ -137,15 +152,17 @@
 
 - (void)startScroll {
 //    [self.cycleScrollView startTimer];
+//    [self.flowView startTimer];
     [self.bannerScrollView startTimer];
 }
 
 - (void)stopScroll {
 //    [self.cycleScrollView stopTimer];
+//    [self.flowView stopTimer];
     [self.bannerScrollView stopTimer];
 }
 
-#pragma mark - JXCategoryListCollectionContentViewDelegate
+#pragma mark - JXCategoryListContentViewDelegate
 - (UIView *)listView {
     return self.view;
 }
@@ -173,15 +190,6 @@
     if ([self.delegate respondsToSelector:@selector(listVC:didScroll:)]) {
         [self.delegate listVC:self didScroll:scrollView];
     }
-}
-
-#pragma mark - SDCycleScrollViewDelegate
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index {
-    
-}
-
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    
 }
 
 //// 滑动-颜色渐变 - SDCyclScrollView处理方法
@@ -235,31 +243,31 @@
 //        [self.delegate listVC:self didChangeColor:color];
 //    }
 //}
-
-// 自定义cell
-- (Class)customCollectionViewCellClassForCycleScrollView:(SDCycleScrollView *)view {
-    return [GKHomeBannerViewCell class];
-}
-
-- (void)setupCustomCell:(GKHomeBannerViewCell *)cell forIndex:(NSInteger)index cycleScrollView:(SDCycleScrollView *)view {
-    GKHomeBannerModel *model = self.bannerLists[index];
-    
-    [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.cover] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        if (!model.headerBgColor) {
-            model.headerBgColor = [UIColor colorWithMostImage:image scale:0.05];
-            
-            if (index == view.curIndex) {
-                self.bgColor = model.headerBgColor;
-                
-                if ([self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
-                    [self.delegate listVC:self didChangeColor:self.bgColor];
-                }
-            }
-//            model.headerBgColor = [self mainColorOfImage:image];
-//            model.headerBgColor = [self mostColor:image scale:0.1];
-        }
-    }];
-}
+//
+//// 自定义cell
+//- (Class)customCollectionViewCellClassForCycleScrollView:(SDCycleScrollView *)view {
+//    return [GKHomeBannerViewCell class];
+//}
+//
+//- (void)setupCustomCell:(GKHomeBannerViewCell *)cell forIndex:(NSInteger)index cycleScrollView:(SDCycleScrollView *)view {
+//    GKHomeBannerModel *model = self.bannerLists[index];
+//
+//    [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.cover] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//        if (!model.headerBgColor) {
+//            model.headerBgColor = [UIColor colorWithMostImage:image scale:0.05];
+//
+//            if (index == view.curIndex) {
+//                self.bgColor = model.headerBgColor;
+//
+//                if ([self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
+//                    [self.delegate listVC:self didChangeColor:self.bgColor];
+//                }
+//            }
+////            model.headerBgColor = [self mainColorOfImage:image];
+////            model.headerBgColor = [self mostColor:image scale:0.1];
+//        }
+//    }];
+//}
 
 #pragma mark - GKCycleScrollViewDataSource
 - (NSInteger)numberOfCellsInCycleScrollView:(GKCycleScrollView *)cycleScrollView {
@@ -271,24 +279,22 @@
     if (!cell) {
         cell = [GKCycleScrollViewCell new];
         cell.tag = index;
-        cell.layer.cornerRadius = 10.0f;
+        cell.layer.cornerRadius = 4.0f;
         cell.layer.masksToBounds = YES;
     }
-    
     GKHomeBannerModel *model = self.bannerLists[index];
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.cover] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (!model.headerBgColor) {
             model.headerBgColor = [UIColor colorWithMostImage:image scale:0.05];
-            
-            if (index == self.bannerScrollView.currentSelectIndex) {
-                self.bgColor = model.headerBgColor;
-                
-                if ([self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
-                    [self.delegate listVC:self didChangeColor:self.bgColor];
-                }
+        }
+        if (index == self.bannerScrollView.currentSelectIndex) {
+            self.bgColor = model.headerBgColor;
+            if ([self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
+                [self.delegate listVC:self didChangeColor:self.bgColor];
             }
         }
     }];
+    
     return cell;
 }
 
@@ -297,56 +303,16 @@
     return CGSizeMake(kBannerW, kBannerH);
 }
 
-- (void)cycleScrollView:(GKCycleScrollView *)cycleScrollView didScroll:(UIScrollView *)scrollView {
+- (void)cycleScrollView:(GKCycleScrollView *)cycleScrollView scrollingFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex ratio:(CGFloat)ratio {
     if (self.isCriticalPoint) return;
     
-    CGFloat offsetX = scrollView.contentOffset.x;
-    CGFloat maxW = self.bannerLists.count * scrollView.bounds.size.width;
+    GKHomeBannerModel *leftModel = self.bannerLists[fromIndex];
+    GKHomeBannerModel *rightModel = self.bannerLists[toIndex];
     
-    CGFloat changeOffsetX = offsetX - maxW;
-    
-    BOOL isFirstRight = NO;
-    
-    if (changeOffsetX < 0) {
-        changeOffsetX = -changeOffsetX;
-        isFirstRight = YES;
-    }
-    
-    CGFloat ratio = (changeOffsetX / scrollView.bounds.size.width);
-    
-    // 超过了边界，不需要处理
-    if (ratio > self.bannerLists.count || ratio < 0) return;
-    
-    ratio = MAX(0, MIN(self.bannerLists.count, ratio));
-    
-    NSInteger baseIndex = floorf(ratio);
-    
-    // 最后一个
-    if (baseIndex + 1 > self.bannerLists.count) {
-        baseIndex = 0;
-    }
-    
-    CGFloat remainderRatio = ratio - baseIndex;
-    if (remainderRatio <= 0 || remainderRatio >= 1) return;
-    
-    GKHomeBannerModel *leftModel  = self.bannerLists[baseIndex];
-    
-    NSInteger nextIndex = 0;
-    if (isFirstRight) {
-        nextIndex = self.bannerLists.count - 1;
-    }else if (baseIndex == self.bannerLists.count - 1) {
-        nextIndex = 0;
-    }else {
-        nextIndex = baseIndex + 1;
-    }
-    
-    GKHomeBannerModel *rightModel = self.bannerLists[nextIndex];
-    
-    UIColor *leftColor  = leftModel.headerBgColor ? leftModel.headerBgColor : GKHomeBGColor;
+    UIColor *leftColor = leftModel.headerBgColor ? leftModel.headerBgColor : GKHomeBGColor;
     UIColor *rightColor = rightModel.headerBgColor ? rightModel.headerBgColor : GKHomeBGColor;
-    
-    UIColor *color = [JXCategoryFactory interpolationColorFrom:leftColor to:rightColor percent:remainderRatio];
-    
+        
+    UIColor *color = [JXCategoryFactory interpolationColorFrom:leftColor to:rightColor percent:ratio];
     self.bgColor = color;
     
     if (self.isSelected && [self.delegate respondsToSelector:@selector(listVC:didChangeColor:)]) {
@@ -373,20 +339,10 @@
         _headerView.backgroundColor = [UIColor clearColor];
         
 //        [_headerView addSubview:self.cycleScrollView];
+//        [_headerView addSubview:self.flowView];
         [_headerView addSubview:self.bannerScrollView];
     }
     return _headerView;
-}
-
-- (SDCycleScrollView *)cycleScrollView {
-    if (!_cycleScrollView) {
-        CGRect cycleFrame = CGRectMake(ADAPTATIONRATIO * 30.0f, ADAPTATIONRATIO * 30.0f, kBannerW, kBannerH);
-        
-        _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:cycleFrame delegate:self placeholderImage:nil];
-        _cycleScrollView.backgroundColor = [UIColor clearColor];
-        _cycleScrollView.autoScrollTimeInterval = 5.0f;
-    }
-    return _cycleScrollView;
 }
 
 - (GKCycleScrollView *)bannerScrollView {
@@ -394,12 +350,11 @@
         _bannerScrollView = [[GKCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, ADAPTATIONRATIO * 360.0f)];
         _bannerScrollView.dataSource = self;
         _bannerScrollView.delegate = self;
+//        _bannerScrollView.topBottomMargin = ADAPTATIONRATIO * 16.0f;
         _bannerScrollView.leftRightMargin = ADAPTATIONRATIO * 60.0f;
         _bannerScrollView.minimumCellAlpha = 0.5f;
-        
         [_bannerScrollView addSubview:self.pageControl];
         _bannerScrollView.pageControl = self.pageControl;
-        
         CGPoint point = CGPointMake(kScreenW * 0.5f, ADAPTATIONRATIO * 300.0f);
         _pageControl.center = point;
     }

@@ -10,10 +10,10 @@
 #import "GKListViewController.h"
 #import "GKHttpRequestTool.h"
 #import "GKHomeModel.h"
-#import <JXCategoryView/JXCategoryView.h>
-#import <SDWebImage/SDWebImage.h>
-#import "JXCategoryTitleView+GKCategory.h"
+#import <JXCategoryViewExt/JXCategoryView.h>
 #import "GKListContainerView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "JXCategoryTitleView+GKCategory.h"
 
 @interface GKHomeViewController()<JXCategoryViewDelegate, JXCategoryListContainerViewDelegate, GKListContainerViewDelegate, GKListViewControllerDelegate>
 
@@ -43,6 +43,7 @@
     [super viewDidLoad];
     
     self.gk_navigationBar.hidden = YES;
+    self.gk_statusBarStyle = UIStatusBarStyleLightContent;
     self.style = GKHomeThemeStyleNone;
     
     [self.view addSubview:self.headerBgView];
@@ -50,34 +51,34 @@
     [self.view addSubview:self.topView];
     [self.topView addSubview:self.categoryView];
     [self.view addSubview:self.containerView];
-    
+
     [self.headerBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
         make.height.mas_equalTo(ADAPTATIONRATIO * 360.0f);
     }];
-    
+
     [self.coverView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.headerBgView);
     }];
-    
+
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
         make.height.mas_equalTo(GK_STATUSBAR_NAVBAR_HEIGHT);
     }];
-    
+
     [self.categoryView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(GK_STATUSBAR_HEIGHT);
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(GK_NAVBAR_HEIGHT);
     }];
-    
+
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.categoryView.mas_bottom);
         make.left.right.bottom.equalTo(self.view);
     }];
-    
+
     [self changeToWhiteStateAtVC:nil];
-    
+
     [self getCateogyrList];
 }
 
@@ -121,6 +122,28 @@
         });
     } failure:^(NSError * _Nonnull error) {
         NSLog(@"%@", error);
+        self.model = [GKHomeModel new];
+        NSMutableArray *arr = [NSMutableArray new];
+        NSArray *titles = @[@"推荐", @"VIP", @"小说", @"直播", @"儿童", @"博客", @"相声评书", @"广播"];
+        [titles enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            GKHomeCategoryModel *model = [GKHomeCategoryModel new];
+            model.title = obj;
+            model.categoryId = @"1111";
+            [arr addObject:model];
+            [self.imgTypes addObject:@(JXCategoryTitleImageType_OnlyTitle)];
+        }];
+        self.model.customCategoryList = arr;
+        
+        self.titles = [NSMutableArray arrayWithArray:titles];
+        // 刷新标题
+        self.categoryView.titles = titles;
+        self.categoryView.imageTypes = self.imgTypes;
+        [self.categoryView reloadData];
+        
+        // 默认选中第一个
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self categoryView:self.categoryView didSelectedItemAtIndex:0];
+        });
     }];
 }
 
@@ -135,7 +158,7 @@
     self.categoryView.titleColor = [UIColor whiteColor];
     self.categoryView.titleSelectedColor = [UIColor whiteColor];
     self.lineView.indicatorColor = [UIColor whiteColor];
-    [self.categoryView refreshCellState];
+    [self.categoryView gk_refreshCellState];
     
     if (vc) {
         vc.isCriticalPoint = NO;
@@ -232,7 +255,7 @@
 }
 
 #pragma mark - JXCategoryListContainerViewDelegate
--  (NSInteger)numberOfListsInlistContainerView:(JXCategoryListContainerView *)listContainerView {
+- (NSInteger)numberOfListsInlistContainerView:(JXCategoryListContainerView *)listContainerView {
     return self.titles.count;
 }
 
@@ -241,7 +264,6 @@
     listVC.delegate = self;
     listVC.categoryModel = self.model.customCategoryList[index];
     listVC.bgColor = GKHomeBGColor; // 设置默认颜色
-    
     return listVC;
 }
 
@@ -271,7 +293,7 @@
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY <= 0) return;
     
-    if (offsetY > ADAPTATIONRATIO * 360.0f) {
+    if (offsetY > ADAPTATIONRATIO * 300.0f) {
         [self changeToBlackStateAtVC:vc];
     }else {
         [self changeToWhiteStateAtVC:vc];
@@ -342,9 +364,9 @@
 - (GKListContainerView *)containerView {
     if (!_containerView) {
         _containerView = [[GKListContainerView alloc] initWithType:JXCategoryListContainerType_CollectionView delegate:self];
+        _containerView.scrollView.backgroundColor = [UIColor clearColor];
         _containerView.delegate = self;
         _containerView.listCellBackgroundColor = [UIColor clearColor];
-        _containerView.scrollView.backgroundColor = [UIColor clearColor];
     }
     return _containerView;
 }

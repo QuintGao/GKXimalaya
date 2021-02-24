@@ -6,7 +6,7 @@
 //  Copyright © 2019 gaokun. All rights reserved.
 //
 
-#import <JXCategoryView/JXCategoryListContainerView.h>
+#import <JXCategoryViewExt/JXCategoryView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
