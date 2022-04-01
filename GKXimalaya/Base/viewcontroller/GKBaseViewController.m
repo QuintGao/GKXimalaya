@@ -21,4 +21,8 @@
     
 }
 
+//- (UIStatusBarStyle)preferredStatusBarStyle {
+//    return self.gk_statusBarStyle;
+//}
+
 @end

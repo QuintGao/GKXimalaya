@@ -55,12 +55,16 @@
     myCellModel.imageType = [self.imageTypes[index] integerValue];
     myCellModel.imageSize = self.imageSize;
     myCellModel.titleImageSpacing = self.titleImageSpacing;
-    if (self.imageNames && self.imageNames.count != 0) {
+    if (self.imageInfoArray && self.imageInfoArray.count != 0) {
+        myCellModel.imageInfo = self.imageInfoArray[index];
+    }else if (self.imageNames && self.imageNames.count != 0) {
         myCellModel.imageName = self.imageNames[index];
     }else if (self.imageURLs && self.imageURLs.count != 0) {
         myCellModel.imageURL = self.imageURLs[index];
     }
-    if (self.selectedImageNames && self.selectedImageNames.count != 0) {
+    if (self.selectedImageInfoArray && self.selectedImageInfoArray.count != 0) {
+        myCellModel.selectedImageInfo = self.selectedImageInfoArray[index];
+    }else if (self.selectedImageNames && self.selectedImageNames.count != 0) {
         myCellModel.selectedImageName = self.selectedImageNames[index];
     }else if (self.selectedImageURLs && self.selectedImageURLs.count != 0) {
         myCellModel.selectedImageURL = self.selectedImageURLs[index];
@@ -115,6 +119,43 @@
         return cellWidth;
     }
     return self.cellWidth;
+}
+
+
+- (CGRect)getTargetCellFrame:(NSInteger)targetIndex {
+    CGRect frame = [super getTargetCellFrame:targetIndex];
+    if (self.isIgnoreImageWidth) {
+        if (targetIndex >= 0 && targetIndex < self.imageTypes.count) {
+            JXCategoryTitleImageType type = [self.imageTypes[targetIndex] integerValue];
+            CGFloat imageWidth = 0;
+            if (type == JXCategoryTitleImageType_LeftImage || type == JXCategoryTitleImageType_RightImage) {
+                imageWidth = self.titleImageSpacing + self.imageSize.width;
+            }
+            frame.size.width -= imageWidth;
+            if (type == JXCategoryTitleImageType_LeftImage) {
+                frame.origin.x += imageWidth;
+            }
+        }
+    }
+    return frame;
+}
+
+- (CGRect)getTargetSelectedCellFrame:(NSInteger)targetIndex selectedType:(JXCategoryCellSelectedType)selectedType {
+    CGRect frame = [super getTargetSelectedCellFrame:targetIndex selectedType:selectedType];
+    if (self.isIgnoreImageWidth) {
+        if (targetIndex >= 0 && targetIndex < self.imageTypes.count) {
+            JXCategoryTitleImageType type = [self.imageTypes[targetIndex] integerValue];
+            CGFloat imageWidth = 0;
+            if (type == JXCategoryTitleImageType_LeftImage || type == JXCategoryTitleImageType_RightImage) {
+                imageWidth = self.titleImageSpacing + self.imageSize.width;
+            }
+            frame.size.width -= imageWidth;
+            if (type == JXCategoryTitleImageType_LeftImage) {
+                frame.origin.x += imageWidth;
+            }
+        }
+    }
+    return frame;
 }
 
 @end

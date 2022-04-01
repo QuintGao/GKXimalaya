@@ -15,23 +15,23 @@ PODS:
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
   - GKCycleScrollView (1.0.6)
-  - GKNavigationBar (1.4.3):
-    - GKNavigationBar/GestureHandle (= 1.4.3)
-    - GKNavigationBar/NavigationBar (= 1.4.3)
-  - GKNavigationBar/GestureHandle (1.4.3)
-  - GKNavigationBar/NavigationBar (1.4.3)
-  - JXCategoryViewExt/Core (1.0.3)
-  - JXCategoryViewExt/Indicator/Line (1.0.3):
+  - GKNavigationBar (1.7.2):
+    - GKNavigationBar/GestureHandle (= 1.7.2)
+    - GKNavigationBar/NavigationBar (= 1.7.2)
+  - GKNavigationBar/GestureHandle (1.7.2)
+  - GKNavigationBar/NavigationBar (1.7.2)
+  - JXCategoryViewExt/Core (1.1.6)
+  - JXCategoryViewExt/Indicator/Line (1.1.6):
     - JXCategoryViewExt/Core
-  - JXCategoryViewExt/Title (1.0.3):
+  - JXCategoryViewExt/Title (1.1.6):
     - JXCategoryViewExt/Core
-  - JXCategoryViewExt/TitleImage (1.0.3):
+  - JXCategoryViewExt/TitleImage (1.1.6):
     - JXCategoryViewExt/Title
   - Masonry (1.1.0)
-  - MJRefresh (3.5.0)
-  - SDWebImage (5.10.4):
-    - SDWebImage/Core (= 5.10.4)
-  - SDWebImage/Core (5.10.4)
+  - MJRefresh (3.7.5)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -59,13 +59,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   GKCycleScrollView: 3afe655bbaa2a25217781ec7a0c387f17625fc90
-  GKNavigationBar: f94a0be7ad4c6c9a33219d471905f767f9c09a53
-  JXCategoryViewExt: b587d982a33b94fb629afccbffff18047a2e2a80
+  GKNavigationBar: a2092a5baa0aaf436c17e113c5494652871ff89d
+  JXCategoryViewExt: 700fbabb51c28dd08db00656e0abb12e17be07e5
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
-  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
 PODFILE CHECKSUM: ebef891d700eb505308dbe7afd43d96a8ba0a10f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

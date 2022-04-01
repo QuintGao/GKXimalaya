@@ -10,6 +10,7 @@
 #import "JXCategoryTitleImageCellModel.h"
 
 @interface JXCategoryTitleImageCell()
+@property (nonatomic, strong) id currentImageInfo;
 @property (nonatomic, strong) NSString *currentImageName;
 @property (nonatomic, strong) NSURL *currentImageURL;
 @property (nonatomic, strong) UIStackView *stackView;
@@ -22,6 +23,7 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
 
+    self.currentImageInfo = nil;
     self.currentImageName = nil;
     self.currentImageURL = nil;
 }
@@ -31,13 +33,7 @@
 
     [self.titleLabel removeFromSuperview];
 
-    _imageView = [[UIImageView alloc] init];
-    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageViewWidthConstraint = [self.imageView.widthAnchor constraintEqualToConstant:0];
-    self.imageViewWidthConstraint.active = YES;
-    self.imageViewHeightConstraint = [self.imageView.heightAnchor constraintEqualToConstant:0];
-    self.imageViewHeightConstraint.active = YES;
+    [self initialImageViewWithClass:UIImageView.class];
 
     _stackView = [[UIStackView alloc] init];
     self.stackView.alignment = UIStackViewAlignmentCenter;
@@ -47,11 +43,24 @@
     [self.stackView.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor].active = YES;
 }
 
+- (void)initialImageViewWithClass:(Class)cls {
+    _imageView = [[cls alloc] init];
+    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageViewWidthConstraint = [self.imageView.widthAnchor constraintEqualToConstant:0];
+    self.imageViewWidthConstraint.active = YES;
+    self.imageViewHeightConstraint = [self.imageView.heightAnchor constraintEqualToConstant:0];
+    self.imageViewHeightConstraint.active = YES;
+}
+
 - (void)reloadData:(JXCategoryBaseCellModel *)cellModel {
     [super reloadData:cellModel];
 
     JXCategoryTitleImageCellModel *myCellModel = (JXCategoryTitleImageCellModel *)cellModel;
-
+    if (myCellModel.imageViewClass) {
+        [self initialImageViewWithClass:myCellModel.imageViewClass];
+    }
+    
     self.titleLabel.hidden = NO;
     self.imageView.hidden = NO;
     [self.stackView removeArrangedSubview:self.titleLabel];
@@ -99,30 +108,44 @@
     }
 
     //因为`- (void)reloadData:(JXCategoryBaseCellModel *)cellModel`方法会回调多次，尤其是左右滚动的时候会调用无数次，如果每次都触发图片加载，会非常消耗性能。所以只会在图片发生了变化的时候，才进行图片加载。
-    NSString *currentImageName;
-    NSURL *currentImageURL;
-    if (myCellModel.imageName) {
-        currentImageName = myCellModel.imageName;
-    } else if (myCellModel.imageURL) {
-        currentImageURL = myCellModel.imageURL;
-    }
-    if (myCellModel.isSelected) {
-        if (myCellModel.selectedImageName) {
-            currentImageName = myCellModel.selectedImageName;
-        } else if (myCellModel.selectedImageURL) {
-            currentImageURL = myCellModel.selectedImageURL;
+    if (myCellModel.loadImageBlock != nil) {
+        id currentImageInfo = myCellModel.imageInfo;
+        if (myCellModel.isSelected) {
+            currentImageInfo = myCellModel.selectedImageInfo;
+        }
+        if (currentImageInfo && [currentImageInfo isKindOfClass:[NSString class]] && ![currentImageInfo isEqualToString:self.currentImageInfo]) {
+            self.currentImageInfo = currentImageInfo;
+            myCellModel.loadImageBlock(self.imageView, currentImageInfo);
+        }else if (currentImageInfo && currentImageInfo != self.currentImageInfo) {
+            self.currentImageInfo = currentImageInfo;
+            myCellModel.loadImageBlock(self.imageView, currentImageInfo);
+        }
+    }else {
+        NSString *currentImageName;
+        NSURL *currentImageURL;
+        if (myCellModel.imageName) {
+            currentImageName = myCellModel.imageName;
+        } else if (myCellModel.imageURL) {
+            currentImageURL = myCellModel.imageURL;
+        }
+        if (myCellModel.isSelected) {
+            if (myCellModel.selectedImageName) {
+                currentImageName = myCellModel.selectedImageName;
+            } else if (myCellModel.selectedImageURL) {
+                currentImageURL = myCellModel.selectedImageURL;
+            }
+        }
+        if (currentImageName.length > 0 && ![currentImageName isEqualToString:self.currentImageName]) {
+            self.currentImageName = currentImageName;
+            self.imageView.image = [UIImage imageNamed:currentImageName];
+        } else if (currentImageURL && ![currentImageURL.absoluteString isEqualToString:self.currentImageURL.absoluteString]) {
+            self.currentImageURL = currentImageURL;
+            if (myCellModel.loadImageCallback) {
+                myCellModel.loadImageCallback(self.imageView, currentImageURL);
+            }
         }
     }
-    if (currentImageName && ![currentImageName isEqualToString:self.currentImageName]) {
-        self.currentImageName = currentImageName;
-        self.imageView.image = [UIImage imageNamed:currentImageName];
-    } else if (currentImageURL && ![currentImageURL.absoluteString isEqualToString:self.currentImageURL.absoluteString]) {
-        self.currentImageURL = currentImageURL;
-        if (myCellModel.loadImageCallback) {
-            myCellModel.loadImageCallback(self.imageView, currentImageURL);
-        }
-    }
-
+    
     if (myCellModel.isImageZoomEnabled) {
         self.imageView.transform = CGAffineTransformMakeScale(myCellModel.imageZoomScale, myCellModel.imageZoomScale);
     } else {
